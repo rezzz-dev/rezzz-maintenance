@@ -21,15 +21,14 @@ class Rezzz_Maintenance_Helper {
 	}
 
 	private function __construct() {
-		add_action( 'admin_menu',         array( $this, 'add_options_page' ) );
+		$user_ID = get_current_user_id();
+		if ($user_ID == 1) {
+			add_action( 'admin_menu', array( $this, 'add_options_page' ) );
+		}
 	}
 
 	public function add_options_page() {
-		add_options_page( 'Maintenance Helper', 'Maintenance Helper', 'manage_options', 'maintenance-helper.php', array( $this, 'generate_mailchimp_markup' ) );
-	}
-
-	public function add_submenu_page(){
-		add_submenu_page( 'settings.php', 'Maintenance Helper', 'Maintenance Helper', 'manage_options', 'maintenance-helper.php', array( $this, 'generate_mailchimp_markup' ) );
+		add_management_page( 'Maintenance Helper', 'Maintenance Helper', 'manage_options', 'maintenance-helper.php', array( $this, 'generate_mailchimp_markup' ) );
 	}
 
 	public function generate_mailchimp_markup() { ?>
